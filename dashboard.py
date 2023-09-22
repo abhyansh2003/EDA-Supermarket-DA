@@ -104,7 +104,7 @@ with cl2:
                             help='Click here to Download the data as a csv file')
         
 filtered_df["month_year"] = filtered_df["Order Date"].dt.to_period("M")
-st.subheader('Time Series Analysis')
+st.subheader(':sparkles: Time Series Analysis')
 linechart = pd.DataFrame(filtered_df.groupby(filtered_df["month_year"].dt.strftime("%Y : %b"))["Sales"].sum()).reset_index()
 fig2 = px.line(linechart, x="month_year", y="Sales", labels={"Sales": "Amount"}, height=500, width=1000, template="gridon")
 st.plotly_chart(fig2, use_container_width=True)
@@ -116,3 +116,21 @@ with st.expander("View data of Time Series:"):
 
 
 # Create a Tree map based on region, category, sub-category
+st.subheader(":cyclone: Hierarchical view of sales using TreeMap")
+fig3 = px.treemap(filtered_df, path = ["Region", "Category", "Sub-Category"], values="Sales", hover_data=["Sales"],
+                  color="Sub-Category")
+fig3.update_layout(width=800, height=650)
+st.plotly_chart(fig3,use_container_width=True)
+
+chart1, chart2 = st.columns((2))
+with chart1:
+    st.subheader('Segment Wise Sales')
+    fig = px.pie(filtered_df, values="Sales", names="Segment", template="plotly_dark")
+    fig.update_traces(text=filtered_df["Segment"], textposition="inside")
+    st.plotly_chart(fig, use_container_width=True)
+
+with chart2:
+    st.subheader('Category Wise Sales')
+    fig = px.pie(filtered_df, values="Sales", names="Category", template="gridon")
+    fig.update_traces(text=filtered_df["Category"], textposition="inside")
+    st.plotly_chart(fig, use_container_width=True)
