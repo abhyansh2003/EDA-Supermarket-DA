@@ -5,5 +5,3 @@ plotly
 seaborn
 matplotlib
 scipy
-os
-warnings
