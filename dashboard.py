@@ -151,7 +151,7 @@ with st.expander("Summary_table"):
 
 # Create a scatter plot
 data1 = px.scatter(filtered_df, x="Sales", y="Profit", size="Quantity")
-data1['layout'].update(title="Relationship between Sales and profit using scatter plot", titlefont=dict(size=20),
+data1.update_layout(title="Relationship between Sales and profit using scatter plot", titlefont=dict(size=20),
                        xaxis=dict(title="Sales", titlefont=dict(size=19)), yaxis=dict(title="Profit", titlefont=dict(size=19)))
 st.plotly_chart(data1, use_container_width=True)
 
